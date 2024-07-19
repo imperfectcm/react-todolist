@@ -2,6 +2,7 @@ import { useState } from "react";
 
 interface TodoItemProps {
     item: String;
+    onRemove: () => void; // function to remove the item from the list.  // (e) => { setItemList(itemList.filter(i => i!==props.item)) }  // OR props.onRemove()
 }
 
 export function TodoItem (props: TodoItemProps) {
@@ -14,6 +15,7 @@ export function TodoItem (props: TodoItemProps) {
     return (
         <div>
             <button onClick={onComplete}>Complete</button>
+            <button onClick={props.onRemove}>Remove</button>
             <span>{props.item}</span>
             <span>( {count} )</span>
         </div>

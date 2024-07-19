@@ -16,19 +16,26 @@ export function TodoList(props: TodoListProps) {
         setInput("");
     }
 
+    const removeItem = (itemToRemove: String) => {
+        const newItemList = itemList.filter(item => item !== itemToRemove)
+        setItemList(newItemList);
+    }
+
     return (
         <div>
             <h2>Todo List</h2>
             <p>By CM</p>
             <input type="text" placeholder="Todo content"
-                onChange={(e) => { 
+                onChange={(e) => {
                     setInput(e.target.value);
                 }}
-                value={input+""}
+                value={input + ""}
             />
             <button onClick={addItem}>Add</button>
             {itemList.map((item, index) => (
-                <TodoItem key={index} item={item} />
+                <TodoItem key={index} item={item} onRemove={() =>
+                    removeItem(item)
+                } />
             ))}
         </div>
     )
