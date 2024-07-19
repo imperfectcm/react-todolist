@@ -12,7 +12,8 @@ export function TodoList(props: TodoListProps) {
     const [input, setInput] = useState<String>("");
 
     const addItem = () => {
-        setItemList([...itemList, input]);
+        const newitemList = [...itemList, input];
+        setItemList(newitemList);
         setInput("");
     }
 
@@ -22,21 +23,25 @@ export function TodoList(props: TodoListProps) {
     }
 
     return (
-        <div>
-            <h2>Todo List</h2>
-            <p>By CM</p>
-            <input type="text" placeholder="Todo content"
-                onChange={(e) => {
-                    setInput(e.target.value);
-                }}
-                value={input + ""}
-            />
-            <button onClick={addItem}>Add</button>
-            {itemList.map((item, index) => (
-                <TodoItem key={index} item={item} onRemove={() =>
-                    removeItem(item)
-                } />
-            ))}
-        </div>
+        <article className="todo-box">
+            <div className="todo-table">
+                <h2>Todo List</h2>
+                <p>By CM</p>
+                <div className="todo-input-area">
+                    <input className="todo-input" type="text" placeholder="Todo content"
+                        onChange={(e) => {
+                            setInput(e.target.value);
+                        }}
+                        value={input + ""}
+                    />
+                    <button className="todo-input-btn" onClick={addItem}>Add</button>
+                </div>
+                {itemList.map((item, index) => (
+                    <TodoItem key={index} item={item} onRemove={() =>
+                        removeItem(item)
+                    } />
+                ))}
+            </div>
+        </article>
     )
 }
