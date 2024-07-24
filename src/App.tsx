@@ -1,10 +1,12 @@
 import './App.css';
+import { Navbar } from './components/Navbar';
 import { TodoList } from './components/TodoList';
 
 function App() {
   return (
     <div className="App">
-      <TodoList items={["Buy Banana", "Buy Apple", "buy Milk"]}/>
+      <Navbar />
+      <TodoList />
     </div>
   );
 }

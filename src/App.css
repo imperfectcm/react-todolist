@@ -1,9 +1,58 @@
+@keyframes btn-click {
+    from {
+        scale: 0.9;
+    }
+
+    to {
+        scale: 1;
+    }
+}
+
+:root {
+    --color-gray: rgb(60, 63, 67);
+    --color-light-gray: rgb(190, 190, 190);
+    --color-barely-white: rgb(245, 245, 245);
+    --color-barely-white-85: rgba(240, 240, 240, 0.85);
+    --btn-click: btn-click;
+}
+
 body {
     background-color: rgb(45, 45, 45);
+    color: var(--color-gray);
+    overflow-y: auto;
+}
+
+.bg-image {
+    background-image: url("./images/02.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    min-height: 100vh;
+    max-height: 100vh;
+    filter: grayscale(40%);
+}
+
+.navbar {
+    position: fixed;
+    top: 5%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    column-gap: 2rem;
+    color: var(--color-barely-white);
+}
+
+.btn {
+    cursor: pointer;
+    user-select: none;
+}
+
+.btn:active {
+    animation: 0.2s var(--btn-click);
 }
 
 h2 {
-    color: rgb(63, 138, 223);
+    color: var(--color-gray);
     user-select: none;
 }
 
@@ -13,8 +62,8 @@ h2 {
     left: 50%;
     transform: translate(-50%, -50%);
     width: clamp(500px, 50vw, 1000px);
-    height: clamp(800px, 70vh, 70vh);
-    background-color: rgb(245, 245, 245);
+    height: 80vh;
+    background-color: var(--color-barely-white-85);
     border-radius: 1rem;
     display: flex;
     flex-direction: column;
@@ -39,8 +88,8 @@ h2 {
 }
 
 .todo-input {
-    border: solid 0.15rem rgb(63, 138, 223);
-    background-color: rgb(245, 245, 245);
+    border: solid 0.15rem var(--color-gray);
+    background-color: var(--color-barely-white);
     border-radius: 0.25rem;
     width: 100%;
     outline: none;
@@ -51,9 +100,9 @@ h2 {
     border: none;
     outline: none;
     border-radius: 0.25rem;
-    padding: 0.25rem 0.75rem;
-    background-color: rgb(63, 138, 223);
-    color: white;
+    padding: 0.5rem 1rem;
+    background-color: var(--color-gray);
+    color: var(--color-barely-white);
 }
 
 .item-list {
@@ -61,7 +110,7 @@ h2 {
     column-gap: 0.5rem;
     padding-block: 0.5rem;
     width: 100%;
-    border-bottom: 0.1rem solid rgb(215, 215, 215);
+    border-bottom: 0.1rem solid var(--color-light-gray);
 }
 
 .item-btn {
@@ -71,12 +120,20 @@ h2 {
     border-radius: 0.25rem;
     height: 1.5rem;
     min-width: 5rem;
-    background-color: rgb(63, 138, 223);
-    color: white;
+    background-color: var(--color-gray);
+    color: var(--color-barely-white);
+    user-select: none;
 }
 
 .remove-btn {
-    background-color: rgb(230, 85, 72);
+    background-color: var(--color-barely-white);
+    color: var(--color-gray);
+    border: 0.15rem solid var(--color-gray);
+}
+
+.remove-btn:hover {
+    background-color: var(--color-gray);
+    color: var(--color-barely-white);
 }
 
 .item-content {

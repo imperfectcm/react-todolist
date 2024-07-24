@@ -1,26 +1,38 @@
 import { useState } from "react";
 import { TodoItem } from "./TodoItem";
+import { useDispatch, useSelector } from "react-redux";
+import { IRootState } from "../store2";
+import { AppDispatcher } from "../store2";
+import { add_item } from "../slices/todoSlice";
 
-interface TodoListProps {
-    items: String[];
-}
+// interface TodoListProps {
+//     items: String[];
+// }
 
-export function TodoList(props: TodoListProps) {
-    //     state   , state updater
-    const [itemList, setItemList] = useState<String[]>(props.items);
+export function TodoList() {
+    const todoItems: Array<{ id: number, name: String, count: number }> = useSelector((state: IRootState) => state.todo.todoItems)
+    //     state, state updater
+    const [input, setInput] = useState("");
 
-    const [input, setInput] = useState<String>("");
+    const dispatch = useDispatch<AppDispatcher>()
 
     const addItem = () => {
-        const newitemList = [...itemList, input];
-        setItemList(newitemList);
-        setInput("");
+        if (input.trim() !== "") {
+            dispatch(add_item(input));
+            setInput("");
+        }
     }
 
-    const removeItem = (itemToRemove: String) => {
-        const newItemList = itemList.filter(item => item !== itemToRemove)
-        setItemList(newItemList);
+    const enterAddItem = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === "Enter") {
+            addItem();
+        }
     }
+
+    // const removeItem = (itemToRemove: String) => {
+    //     const newItemList = itemList.filter(item => item !== itemToRemove)
+    //     setItemList(newItemList);
+    // }
 
     return (
         <article className="todo-box">
@@ -32,14 +44,15 @@ export function TodoList(props: TodoListProps) {
                         onChange={(e) => {
                             setInput(e.target.value);
                         }}
-                        value={input + ""}
+                        value={input}
+                        onKeyDown={(e) => enterAddItem(e)}
                     />
-                    <button className="todo-input-btn" onClick={addItem}>Add</button>
+                    <button className="todo-input-btn btn" onClick={addItem}>Add</button>
                 </div>
-                {itemList.map((item, index) => (
-                    <TodoItem key={index} item={item} onRemove={() =>
-                        removeItem(item)
-                    } />
+                {todoItems.map((entry) => (
+                    <TodoItem key={entry.id} id={entry.id} name={entry.name} count={entry.count}
+                    // onRemove={() => removeItem(entry)} 
+                    />
                 ))}
             </div>
         </article>
