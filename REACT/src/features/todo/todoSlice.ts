@@ -21,10 +21,20 @@ export const todoSlice = createSlice({
                 id: state.sequence + 1, name: action.payload, count: 0
             })
             state.sequence += 1;
+        },
+        complete_item: (state: TodoState, action: PayloadAction<number>) => {
+            state.todoItems.map((i) => {
+                if (i.id == action.payload) ++i.count;
+            })
+        },
+        remove_item: (state: TodoState, action: PayloadAction<number>) => {
+            state.todoItems = state.todoItems.filter((i) => i.id !== action.payload);
         }
     }
 });
 
 export const { add_item } = todoSlice.actions;
+export const { complete_item } = todoSlice.actions;
+export const { remove_item } = todoSlice.actions;
 const todoReducer = todoSlice.reducer
 export default todoReducer;

@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react"
-import { TodoItem } from "./components/TodoItem"
+import { TodoItem } from "./features/todo/TodoItem"
 
 
 describe("TodoItem", () => {

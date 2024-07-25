@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react"
-import { TodoItem } from "./components/TodoItem"
-import { TodoList } from "./components/TodoList"
+import { TodoItem } from "./features/todo/TodoItem"
+import { TodoList } from "./features/todo/TodoList"
 
 jest.mock('./components/TodoItem')
 

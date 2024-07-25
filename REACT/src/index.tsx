@@ -5,6 +5,9 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import { store2 } from './store2';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Navbar } from './features/navbar/Navbar';
+import { About } from './features/about/About';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -12,8 +15,16 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <Provider store={store2}>
-      <section className="bg-image"></section>
-      <App />
+      <BrowserRouter>
+        <section className="bg-image"></section>
+        <Navbar />
+        <Routes>
+
+          <Route path="/" element={<App />} />
+          <Route path="/about" element={<About />} />
+
+        </Routes>
+      </BrowserRouter>
     </Provider>
   </React.StrictMode>
 );
