@@ -1,14 +1,14 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface TodoState {
-    todoItems: Array<{ id: number, name: String, count: number }>
+    todoItems: Array<{ id: number, content: String, count: number }>
     sequence: number;
 }
 
 const initialState: TodoState = {
     todoItems: [
-        { id: 1, name: "Example - Buy NVDA", count: 1 },
-        { id: 2, name: "Example - Buy MSFT", count: 2 }],
+        { id: 1, content: "Example - Buy NVDA", count: 1 },
+        { id: 2, content: "Example - Buy MSFT", count: 2 }],
     sequence: 2
 };
 
@@ -18,7 +18,7 @@ export const todoSlice = createSlice({
     reducers: {
         add_item: (state: TodoState, action: PayloadAction<String>) => {
             state.todoItems.push({
-                id: state.sequence + 1, name: action.payload, count: 0
+                id: state.sequence + 1, content: action.payload, count: 0
             })
             state.sequence += 1;
         },

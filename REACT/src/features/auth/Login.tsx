@@ -33,7 +33,7 @@ export function Login() {
                         onChange={(e) => setInput(e.target.value)}
                         onKeyDown={(e) => enterAddUsername(e)}
                         value={input} />
-                    <button className="username-btn btn" onClick={addUsername}>Confirm username</button>
+                    <button className="username-btn btn" onClick={addUsername}>Enter</button>
                 </div>
             </div>
         </article>

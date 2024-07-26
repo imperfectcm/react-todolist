@@ -1,11 +1,17 @@
 import express from "express";
 import { Request, Response } from "express";
+import { TodoRouter } from "./Routers/TodoRouter";
+import cors from "cors";
 
 const app = express();
+app.use(cors<Request>());
+
 const PORT = 8080;
 
-app.get("/", function (req: Request, res: Response) {
-    res.end("Hello World");
+app.use("/todo", TodoRouter);
+
+app.get("/hi", (req: Request, res: Response) => {
+    res.send("hi");
 });
 
 

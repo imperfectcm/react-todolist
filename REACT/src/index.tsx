@@ -8,6 +8,9 @@ import { store2 } from './store2';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Navbar } from './features/navbar/Navbar';
 import { About } from './features/about/About';
+import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
+
+export const queryClient = new QueryClient
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -15,16 +18,18 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <Provider store={store2}>
-      <BrowserRouter>
-        <section className="bg-image"></section>
-        <Navbar />
-        <Routes>
+      <QueryClientProvider client={queryClient}>
+        <BrowserRouter>
+          <section className="bg-image"></section>
+          <Navbar />
+          <Routes>
 
-          <Route path="/" element={<App />} />
-          <Route path="/about" element={<About />} />
+            <Route path="/" element={<App />} />
+            <Route path="/about" element={<About />} />
 
-        </Routes>
-      </BrowserRouter>
+          </Routes>
+        </BrowserRouter>
+      </QueryClientProvider>
     </Provider>
   </React.StrictMode>
 );
