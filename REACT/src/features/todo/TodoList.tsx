@@ -3,8 +3,9 @@ import { TodoItem } from "./TodoItem";
 import { useDispatch, useSelector } from "react-redux";
 import { IRootState } from "../../store2";
 import { AppDispatcher } from "../../store2";
-import { add_item, complete_item, remove_item } from "./todoSlice";
-import { addTodoItem, useGetTodoItems } from "../../api/todoApi";
+import { complete_item, remove_item } from "./todoSlice";
+import { useGetTodoItems, addTodoItem, removeTodoItem, addTodoItemCount } from "../../api/todoApi";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export function TodoList() {
     let todoItems: Array<{ id: number, content: String, count: number }> = useSelector((state: IRootState) => state.todo.todoItems)
@@ -17,7 +18,7 @@ export function TodoList() {
 
     const addItem = (username: String, input: String) => {
         if (input.trim() === "") return;
-        addTodoItem(username, input);
+        onAddTodoItem.mutate({ username: username, content: input })
         setInput("");
     }
 
@@ -37,7 +38,39 @@ export function TodoList() {
 
 
     // ========== from database ==========
-    const todoItemsData = useGetTodoItems(username);
+    const todoItemsData = useGetTodoItems();
+
+    const queryClient = useQueryClient();
+
+    const onAddTodoItem = useMutation({
+        mutationFn: async (data: { username: String, content: String }) => {
+            return addTodoItem(data.username, data.content);
+        },
+        onSuccess: () => queryClient.invalidateQueries({ queryKey: ["todoItemsDB"] })
+    });
+
+    const onRemoveTodoItem = useMutation({
+        mutationFn: async (data: { id: number }) => {
+            return removeTodoItem(data.id);
+        },
+        onSuccess: () => queryClient.invalidateQueries({ queryKey: ["todoItemsDB"] })
+    });
+
+    const removeItemDB = (id: number) => {
+        onRemoveTodoItem.mutate({ id: id });
+    }
+
+    const onAddTodoItemCount = useMutation({
+        mutationFn: async (data: { id: number }) => {
+            return addTodoItemCount(data.id);
+        },
+        onSuccess: () => queryClient.invalidateQueries({ queryKey: ["todoItemsDB"] })
+    });
+
+    const completeItemDB = (id: number) => {
+        onAddTodoItemCount.mutate({ id: id });
+    }
+
 
     return (
         <article className="todo-box">
@@ -60,8 +93,8 @@ export function TodoList() {
                             id={item.id}
                             content={item.content}
                             count={item.count}
-                            onComplete={() => { }}
-                            onRemove={() => { }}
+                            onComplete={() => { completeItemDB(item.id) }}
+                            onRemove={() => { removeItemDB(item.id) }}
                         />
                     )) :
                     todoItems.map((entry) => (

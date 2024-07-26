@@ -10,7 +10,7 @@ import { Navbar } from './features/navbar/Navbar';
 import { About } from './features/about/About';
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
 
-export const queryClient = new QueryClient
+export const queryClient = new QueryClient();
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -18,8 +18,8 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <Provider store={store2}>
-      <QueryClientProvider client={queryClient}>
-        <BrowserRouter>
+      <BrowserRouter>
+        <QueryClientProvider client={queryClient}>
           <section className="bg-image"></section>
           <Navbar />
           <Routes>
@@ -28,8 +28,8 @@ root.render(
             <Route path="/about" element={<About />} />
 
           </Routes>
-        </BrowserRouter>
-      </QueryClientProvider>
+        </QueryClientProvider>
+      </BrowserRouter>
     </Provider>
   </React.StrictMode>
 );

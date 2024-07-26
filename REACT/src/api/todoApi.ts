@@ -12,12 +12,12 @@ interface TodoItemType {
     updated_at: String;
 }
 
-export function useGetTodoItems(username: String) {
-    // let username: String = useSelector((state: IRootState) => state.auth.username)
+export function useGetTodoItems() {
+    let username: String = useSelector((state: IRootState) => state.auth.username)
 
     const { isLoading, isFetching, error, data
     } = useQuery({
-        queryKey: ["todoItems"],
+        queryKey: ["todoItemsDB"],
         queryFn: async () => {
             let res = await fetch(`${process.env.REACT_APP_API_SERVER}/todo?username=${username}`)
             let result = await res.json();
@@ -44,4 +44,32 @@ export async function addTodoItem(username: String, content: String) {
 
     const result = await res.json()
     return result.message;
+}
+
+export async function removeTodoItem(id: number) {
+
+    const res = await fetch(`${process.env.REACT_APP_API_SERVER}/todo`, {
+        method: "DELETE",
+        headers: {
+            "Content-Type": 'application/json'
+        },
+        body: JSON.stringify({ id })
+    })
+
+    const result = await res.json()
+    return result.message;
+}
+
+export async function addTodoItemCount(id: number) {
+
+    const res = await fetch(`${process.env.REACT_APP_API_SERVER}/todo/count`, {
+        method: "POST",
+        headers: {
+            "Content-Type": 'application/json'
+        },
+        body: JSON.stringify({ id })
+    })
+
+    const result = await res.json()
+    return result.data;
 }

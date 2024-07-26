@@ -32,4 +32,14 @@ export class TodoService {
             });
     }
 
+    // ========== add todo item count by id ==========
+    async addTodoCountById(id: number) {
+        let data = await this.knex("todos")
+            .where({ id })
+            .increment("count", 1)
+            .returning("count");
+
+        return data[0].count;
+    }
+
 };

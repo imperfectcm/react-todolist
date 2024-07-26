@@ -39,12 +39,27 @@ export class TodoController {
     // ========== remove new todo item by id ==========
     removeUserTodo = async (req: Request, res: Response) => {
         const { id } = req.body;
+        try {
+            await this.todoService.removeTodoById(id);
+            res.status(201).json({ message: "Todo item deleted successfully" });
+            return;
+        } catch (err) {
+            console.log(err);
+            res.status(500).send(err);
+            return;
+        }
+    };
+
+    // ========== add todo item count by id ==========
+    addTodoCount = async (req: Request, res: Response) => {
+        const { id } = req.body;
         // const { content } = req.body.content;
         // console.log(username);
         console.log(req.body);
         try {
-            await this.todoService.removeTodoById(id);
-            res.status(201).json({ message: "Todo item deleted successfully" });
+            let count = await this.todoService.addTodoCountById(id);
+            console.log(count);
+            res.status(201).json({ data: count });
             return;
         } catch (err) {
             console.log(err);
