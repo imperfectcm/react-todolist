@@ -17,6 +17,28 @@ export function TodoList() {
     // ========== from local ==========
     const dispatch = useDispatch<AppDispatcher>()
 
+    const completeItem = (id: number) => {
+        dispatch(complete_item(id));
+    }
+    
+    const removeItem = (id: number) => {
+        dispatch(remove_item(id));
+    }
+    
+    
+    // ========== from database ==========
+    const todoItemsData = useGetTodoItems();
+    
+    const queryClient = useQueryClient();
+
+    // add items to database
+    const onAddTodoItem = useMutation({
+        mutationFn: async (data: { username: String, content: String }) => {
+            return addTodoItem(data.username, data.content);
+        },
+        onSuccess: () => queryClient.invalidateQueries({ queryKey: ["todoItemsDB"] })
+    });
+
     const addItem = (username: String, input: String) => {
         if (input.trim() === "") return;
         onAddTodoItem.mutate({ username: username, content: input })
@@ -29,27 +51,7 @@ export function TodoList() {
         }
     }
 
-    const completeItem = (id: number) => {
-        dispatch(complete_item(id));
-    }
-
-    const removeItem = (id: number) => {
-        dispatch(remove_item(id));
-    }
-
-
-    // ========== from database ==========
-    const todoItemsData = useGetTodoItems();
-
-    const queryClient = useQueryClient();
-
-    const onAddTodoItem = useMutation({
-        mutationFn: async (data: { username: String, content: String }) => {
-            return addTodoItem(data.username, data.content);
-        },
-        onSuccess: () => queryClient.invalidateQueries({ queryKey: ["todoItemsDB"] })
-    });
-
+    // remove items from database
     const onRemoveTodoItem = useMutation({
         mutationFn: async (data: { id: number }) => {
             return removeTodoItem(data.id);
@@ -61,6 +63,7 @@ export function TodoList() {
         onRemoveTodoItem.mutate({ id: id });
     }
 
+    // complete items in database (count + 1)
     const onAddTodoItemCount = useMutation({
         mutationFn: async (data: { id: number }) => {
             return addTodoItemCount(data.id);
@@ -72,8 +75,10 @@ export function TodoList() {
         onAddTodoItemCount.mutate({ id: id });
     }
 
+    // display item sequence
     let itemNo = 0;
 
+    
     return (
         <article className="todo-box">
             <div className="todo-table">
