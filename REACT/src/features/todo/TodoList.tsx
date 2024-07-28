@@ -78,6 +78,10 @@ export function TodoList() {
     // display item sequence
     let itemNo = 0;
 
+    // example wont show edit btn
+    let isExample = false;
+
+    todoItemsData?.length ? isExample = false : isExample = true;
     
     return (
         <article className="todo-box">
@@ -105,6 +109,7 @@ export function TodoList() {
                             id={item.id}
                             content={item.content}
                             count={item.count}
+                            isExample={isExample}
                             onComplete={() => completeItemDB(item.id)}
                             onRemove={() => removeItemDB(item.id)}
                         />
@@ -117,6 +122,7 @@ export function TodoList() {
                             id={entry.id}
                             content={entry.content}
                             count={entry.count}
+                            isExample={isExample}
                             onComplete={() => completeItem(entry.id)}
                             onRemove={() => removeItem(entry.id)}
                         />

@@ -11,6 +11,7 @@ interface TodoItemProps {
     id: number;
     content: String;
     count: number;
+    isExample: Boolean;
     onComplete: () => void;
     onRemove: () => void; // function to remove the item from the list.  // (e) => { setItemList(itemList.filter(i => i!==props.item)) }  // OR props.onRemove()
 }
@@ -32,7 +33,9 @@ export function TodoItem(props: TodoItemProps) {
                 :
                 <>
                     <button className="item-btn btn" onClick={props.onComplete}><Icon path={mdiCheck} size={1} /></button>
-                    {/* <button className="item-btn remove-btn btn" onClick={() => { setEdit(!edit) }}><Icon path={mdiNoteEditOutline} size={1} /></button> */}
+                    {props.isExample ? "" :
+                        <button className="item-btn remove-btn btn" onClick={() => { setEdit(!edit) }}><Icon path={mdiNoteEditOutline} size={1} /></button>
+                    }
                     <button className="item-btn remove-btn btn" onClick={props.onRemove}><Icon path={mdiTrashCanOutline} size={1} /></button>
                     <span className="item-content">
                         <span className={"todoId-" + props.id.toString()}>{props.itemNo}. {props.content}</span>
