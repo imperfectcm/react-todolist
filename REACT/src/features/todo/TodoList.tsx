@@ -13,6 +13,7 @@ export function TodoList() {
     //     state, state updater
     const [input, setInput] = useState("");
 
+
     // ========== from local ==========
     const dispatch = useDispatch<AppDispatcher>()
 
@@ -71,6 +72,7 @@ export function TodoList() {
         onAddTodoItemCount.mutate({ id: id });
     }
 
+    let itemNo = 0;
 
     return (
         <article className="todo-box">
@@ -87,18 +89,26 @@ export function TodoList() {
                     />
                     <button className="todo-input-btn btn" onClick={() => { addItem(username, input) }}>Add</button>
                 </div>
-                {todoItemsData?.length ?
+                {todoItemsData == "Loading" ?
+                <div className="loader-area"><div className="loader"></div></div>
+                : 
+                todoItemsData?.length ?
                     todoItemsData.map((item) => (
+                        itemNo += 1,
                         <TodoItem key={item.id}
+                            itemNo={itemNo}
                             id={item.id}
                             content={item.content}
                             count={item.count}
-                            onComplete={() => { completeItemDB(item.id) }}
-                            onRemove={() => { removeItemDB(item.id) }}
+                            onComplete={() => completeItemDB(item.id)}
+                            onRemove={() => removeItemDB(item.id)}
                         />
-                    )) :
+                    ))
+                    :
                     todoItems.map((entry) => (
+                        itemNo += 1,
                         <TodoItem key={entry.id}
+                            itemNo={itemNo}
                             id={entry.id}
                             content={entry.content}
                             count={entry.count}

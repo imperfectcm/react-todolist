@@ -12,5 +12,6 @@ TodoRouter.use(express.urlencoded({ extended: true }));
 
 TodoRouter.get("/", todoController.getUserTodo);
 TodoRouter.post("/", todoController.addUserTodo);
+TodoRouter.put("/", todoController.updateTodoContent);
 TodoRouter.delete("/", todoController.removeUserTodo);
 TodoRouter.post("/count", todoController.addTodoCount);

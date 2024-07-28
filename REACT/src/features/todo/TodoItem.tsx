@@ -1,6 +1,13 @@
 import { useState } from "react";
+import Icon from '@mdi/react';
+import { mdiCheck } from '@mdi/js';
+import { mdiTrashCanOutline } from '@mdi/js';
+import { mdiNoteEditOutline } from '@mdi/js';
+import { EditTodo } from "./editTodo";
+
 
 interface TodoItemProps {
+    itemNo: number;
     id: number;
     content: String;
     count: number;
@@ -10,16 +17,33 @@ interface TodoItemProps {
 
 export function TodoItem(props: TodoItemProps) {
 
-    // const [count, setCount] = useState<number>(0);
+    const [edit, setEdit] = useState(false);
 
     return (
         <div className="item-list">
-            <button className="item-btn" onClick={props.onComplete}>Complete</button>
-            <button className="item-btn remove-btn" onClick={props.onRemove}>Remove</button>
-            <span className="item-content">
-                <span>{props.id}. {props.content}</span>
-                <span>( {props.count} )</span>
-            </span>
+            {edit ?
+                "" :
+                <>
+                    <button className="item-btn btn" onClick={props.onComplete}><Icon path={mdiCheck} size={1} /></button>
+                    <button className="item-btn remove-btn btn" onClick={() => { setEdit(!edit) }}><Icon path={mdiNoteEditOutline} size={1} /></button>
+                    <button className="item-btn remove-btn btn" onClick={props.onRemove}><Icon path={mdiTrashCanOutline} size={1} /></button>
+                </>
+            }
+            {edit ?
+                <EditTodo
+                    key={props.id}
+                    id={props.id}
+                    content={props.content}
+                    editStatus={edit}
+                    onEdit={() => setEdit(!edit)}
+                    />
+                :
+                <span className="item-content">
+                    <span className={"todoId-" + props.id.toString()}>{props.itemNo}. {props.content}</span>
+                    <span>( {props.count} )</span>
+                </span>
+            }
+
         </div>
     )
 }

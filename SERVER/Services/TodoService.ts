@@ -42,4 +42,14 @@ export class TodoService {
         return data[0].count;
     }
 
+    // ========== update todo item content by id ==========
+    async updateTodoContentById(id: number, content: String) {
+        let data = await this.knex("todos")
+            .where({ id })
+            .update({ content })
+            .returning("content");
+
+        return data[0].content;
+    }
+
 };

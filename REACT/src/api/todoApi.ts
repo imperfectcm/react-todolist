@@ -25,7 +25,9 @@ export function useGetTodoItems() {
         }
     });
 
-    if (isLoading || isFetching || error || !data) return [];
+    if (isLoading || isFetching) return "Loading";
+
+    if (error || !data) return [];
 
     return data;
 }
@@ -68,6 +70,20 @@ export async function addTodoItemCount(id: number) {
             "Content-Type": 'application/json'
         },
         body: JSON.stringify({ id })
+    })
+
+    const result = await res.json()
+    return result.data;
+}
+
+export async function updateTodoItemContent(id: number, content: String) {
+
+    const res = await fetch(`${process.env.REACT_APP_API_SERVER}/todo`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": 'application/json'
+        },
+        body: JSON.stringify({ id, content })
     })
 
     const result = await res.json()

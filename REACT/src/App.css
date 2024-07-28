@@ -116,11 +116,29 @@ h2 {
 
 .item-btn {
     cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     outline: none;
     border: none;
     border-radius: 0.25rem;
     height: 1.5rem;
-    min-width: 5rem;
+    width: 2rem;
+    background-color: var(--color-gray);
+    color: var(--color-barely-white);
+    user-select: none;
+}
+
+.edit-btn {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    outline: none;
+    border: none;
+    border-radius: 0.25rem;
+    height: 1.5rem;
+    width: 2rem;
     background-color: var(--color-gray);
     color: var(--color-barely-white);
     user-select: none;
@@ -137,17 +155,25 @@ h2 {
     color: var(--color-barely-white);
 }
 
-.item-content {
+.item-content,
+.edit-item-content {
     display: flex;
-    flex-wrap: wrap;
-    max-width: calc(100% - 11rem);
+    /* flex-wrap: wrap; */
+    /* max-width: calc(100% - 11rem); */
+    width: 100%;
     column-gap: 0.5rem;
 }
 
+.item-content {
+    flex-wrap: wrap;
+}
+
+.edit-item-content input {
+    width: 100%
+}
+
 .item-content span {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    white-space: pre-wrap;
 }
 
 .login-box {
@@ -188,3 +214,42 @@ h2 {
     align-items: center;
     color: var(--color-barely-white);
 }
+
+.loader-area {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* HTML: <div class="loader"></div> */
+.loader {
+    width: 35px;
+    height: 80px;
+    position: relative;
+  }
+  .loader:after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    padding: 3px 5px;
+    border-top: 1px solid #bbb6aa;
+    border-bottom: 4px solid #bbb6aa;
+    background: 
+      linear-gradient(#612329 0 0) bottom no-repeat content-box, 
+      #e4e0d7;
+    mix-blend-mode: darken;
+    animation: l1 1.5s infinite linear;
+  }
+  .loader:before {
+    content: "";
+    position: absolute;
+    inset: -18px calc(50% - 2px) 8px;
+    background: #eb6b3e;   
+    transform-origin: bottom;
+    transform: rotate(8deg);
+  }
+  @keyframes l1 {
+   0%   {background-size: 100% 100%}
+   100% {background-size: 100% 5%}
+  }

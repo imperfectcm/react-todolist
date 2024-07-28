@@ -21,10 +21,7 @@ export class TodoController {
 
     // ========== add new todo item by usename ==========
     addUserTodo = async (req: Request, res: Response) => {
-        const { username , content } = req.body;
-        // const { content } = req.body.content;
-        // console.log(username);
-        console.log(req.body);
+        const { username, content } = req.body;
         try {
             await this.todoService.addTodoByUsername(username, content);
             res.status(201).json({ message: "Todo item added successfully" });
@@ -53,13 +50,23 @@ export class TodoController {
     // ========== add todo item count by id ==========
     addTodoCount = async (req: Request, res: Response) => {
         const { id } = req.body;
-        // const { content } = req.body.content;
-        // console.log(username);
-        console.log(req.body);
         try {
             let count = await this.todoService.addTodoCountById(id);
-            console.log(count);
             res.status(201).json({ data: count });
+            return;
+        } catch (err) {
+            console.log(err);
+            res.status(500).send(err);
+            return;
+        }
+    };
+
+    // ========== update todo item content by id ==========
+    updateTodoContent = async (req: Request, res: Response) => {
+        const { id, content } = req.body;
+        try {
+            let newContent = await this.todoService.updateTodoContentById(id, content);
+            res.status(201).json({ data: newContent });
             return;
         } catch (err) {
             console.log(err);
